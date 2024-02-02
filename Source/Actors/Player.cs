@@ -31,6 +31,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	private const float DashEndSpeedMult = .75f;
 	private const float DashTime = .2f;
 	private const float DashResetCooldown = .2f;
+	private const float JumpResetCooldown = .2f;
 	private const float DashCooldown = .1f;
 	private const float DashRotateSpeed = MathF.Tau * .3f;
 
@@ -323,6 +324,8 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 				tDashCooldown -= Time.Delta;
 			if (tDashResetCooldown > 0)
 				tDashResetCooldown -= Time.Delta;
+			if (tJumpResetCooldown > 0)
+				tJumpResetCooldown -= Time.Delta;
 			if (tDashResetFlash > 0)
 				tDashResetFlash -= Time.Delta;
 			if (tNoMove > 0)
@@ -413,6 +416,8 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 				coyoteZ = Position.Z;
 				if (tDashResetCooldown <= 0)
 					RefillDash();
+				if (tJumpResetCooldown <= 0)
+					RefillJump();
 			}
 			else
 				groundNormal = Vec3.UnitZ;
@@ -496,9 +501,9 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 				Color color;
 				if (tDashResetFlash > 0)
 					color = CRefillFlash;
-				else if (dashes == 1)
+				else if (jumps == 1)
 					color = CNormal;
-				else if (dashes == 0)
+				else if (jumps == 0)
 					color = CNoDash;
 				else
 					color = CTwoDashes;
@@ -633,7 +638,8 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 		}
 
 		Hair.Color = color;
-		Hair.Nodes = (InFeatherState ? 18 : (dashes >= 2 ? 16 : 10));
+		//Hair.Nodes = (InFeatherState ? 18 : (dashes >= 2 ? 16 : 10)); Madeline
+		Hair.Nodes = InFeatherState ? 8 : (dashes >= 2 ? 7 : 4);
 	}
 
 	public void SweepTestMove(Vec3 delta, bool resolveImpact)
@@ -694,7 +700,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 				Audio.Play(Sfx.sfx_feather_state_bump_wall, Position);
 			}
 			// is it a breakable thing?
-			else if (resolveImpact && hit.Actor is BreakBlock breakable && !breakable.Destroying && velocity.XY().Length() > 90)
+			else if (resolveImpact && hit.Actor is BreakBlock breakable && !breakable.Destroying)
 			{
 				BreakBlock(breakable, velocity.Normalized());
 			}
@@ -719,13 +725,21 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	public void CancelGroundSnap() =>
 		tGroundSnapCooldown = 0.1f;
 
-	private void Jump()
+	private void Jump(bool inAir = false)
 	{
-		Position = Position with { Z = coyoteZ };
+		if (jumps <= 0)
+			return;
+		//Position = Position with { Z = coyoteZ };
 		holdJumpSpeed = velocity.Z = JumpSpeed;
 		tHoldJump = JumpHoldTime;
 		tCoyote = 0;
 		autoJump = false;
+
+		tJumpResetCooldown = JumpResetCooldown;
+
+		if (inAir) {
+			jumps--;
+		}
 
 		var input = RelativeMoveInput;
 		if (input != Vec2.Zero)
@@ -1147,12 +1161,14 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 		}
 
 		// dashing
-		if (TryDash())
-			return;
+		//if (TryDash())
+		//	return;
 
 		// jump & gravity
 		if (tCoyote > 0 && Controls.Jump.ConsumePress())
 			Jump();
+		else if (Controls.Jump.ConsumePress())
+			Jump(true);
 		else if (WallJumpCheck())
 			WallJump();
 		else
@@ -1215,10 +1231,13 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	#region Dashing State
 
 	public int Dashes => dashes;
+	public int Jumps => jumps;
 	private int dashes = 1;
+	private int jumps = 1;
 	private float tDash;
 	private float tDashCooldown;
 	private float tDashResetCooldown;
+	private float tJumpResetCooldown;
 	private float tDashResetFlash;
 	private float tNoDashJump;
 	private bool dashedOnGround;
@@ -1226,13 +1245,14 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 	private bool TryDash()
 	{
-		if (dashes > 0 && tDashCooldown <= 0 && Controls.Dash.ConsumePress())
-		{
-			dashes--;
-			stateMachine.State = States.Dashing;
-			return true;
-		}
-		else return false;
+		//if (dashes > 0 && tDashCooldown <= 0 && Controls.Dash.ConsumePress())
+		//{
+		//	dashes--;
+		//	stateMachine.State = States.Dashing;
+		//	return true;
+		//}
+		//else return false;
+		return false;
 	}
 
 	private void StDashingEnter()
@@ -1335,6 +1355,18 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 			return false;
 	}
 
+	public bool RefillJump(int amount = 1)
+	{
+		if (jumps < amount)
+		{
+			jumps = amount;
+			tDashResetFlash = .05f;
+			return true;
+		}
+		else
+			return false;
+	}
+
 	private void SetDashSpeed(in Vec2 dir)
 	{
 		if (dashedOnGround)
@@ -1370,8 +1402,8 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 		if (tNoSkidJump > 0)
 			tNoSkidJump -= Time.Delta;
 
-		if (TryDash())
-			return;
+		//if (TryDash())
+		//	return;
 
 		if (RelativeMoveInput.LengthSquared() < .2f * .2f || Vec2.Dot(RelativeMoveInput, targetFacing) < .7f || !onGround)
 		{
@@ -1849,12 +1881,14 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 		}
 
 		// dashing
+		/*
 		if (dashes > 0 && tDashCooldown <= 0 && Controls.Dash.ConsumePress())
 		{
 			stateMachine.State = States.Dashing;
 			dashes--;
 			return;
 		}
+		*/
 
 		// start climbing
 		if (Controls.Climb.Down && TryClimb())

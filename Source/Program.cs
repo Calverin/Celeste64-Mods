@@ -8,7 +8,7 @@ class Program
 {
 	public static void Main(string[] args)
 	{
-		Log.Info($"Celeste 64 v.{Game.Version.Major}.{Game.Version.Minor}.{Game.Version.Build}");
+		Log.Info($"Celeste 64: Theo is on the Mountain v.{Game.Version.Major}.{Game.Version.Minor}.{Game.Version.Build}");
 
 		AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledExceptionEventArgs e) =>
 		{
@@ -38,7 +38,7 @@ class Program
 		// construct a log message
 		const string ErrorFileName = "ErrorLog.txt";
 		StringBuilder error = new();
-		error.AppendLine($"Celeste 64 v.{Game.Version.Major}.{Game.Version.Minor}.{Game.Version.Build}");
+		error.AppendLine($"Celeste 64: Theo is on the Mountain v.{Game.Version.Major}.{Game.Version.Minor}.{Game.Version.Build}");
 		error.AppendLine($"Error Log ({DateTime.Now})");
 		error.AppendLine($"Call Stack:");
 		error.AppendLine(e?.ToString() ?? string.Empty);

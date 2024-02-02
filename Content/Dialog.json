@@ -681,12 +681,17 @@
 		{
 			"Face": "signpost",
 			"Voice": "credits/credits_01",
-			"Text": "Celeste 64: Fragments of the Mountain"
+			"Text": "Celeste 64: Theo is on the Mountain"
 		},
 		{
 			"Face": "signpost",
 			"Voice": "credits/credits_02",
 			"Text": "Created in a week(ish) by the Celeste team"
+		},
+		{
+			"Face": "calverin",
+			"Voice": "granny/granny1_01_g1",
+			"Text": "Mod by Calverin in a few hours, Theo would be proud.\n(At least I hope so, haha...)"
 		},
 		{
 			"Face": "signpost",
