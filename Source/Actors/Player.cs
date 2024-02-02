@@ -66,7 +66,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	private const float FeatherExitXYMult = .5f;
 	private const float FeatherExitZSpeed = 60;
 
-	static private readonly Color CNormal = 0xdb2c00;
+	static private readonly Color CNormal = 0x452318;
 	static private readonly Color CNoDash = 0x6ec0ff;
 	static private readonly Color CTwoDashes = 0xfa91ff;
 	static private readonly Color CRefillFlash = Color.White;
@@ -196,7 +196,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 		// setup model
 		{
-			Model = new(Assets.Models["player"]);
+			Model = new(Assets.Models["theo"]);
 			Model.SetBlendDuration("Idle", "Dash", 0.05f);
 			Model.SetBlendDuration("Idle", "Run", 0.2f);
 			Model.SetBlendDuration("Run", "Skid", .125f);
@@ -228,7 +228,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 			return Vec3.Dot(velocity.Normalized(), spike.Direction) < 0.5f;
 		};
 
-		SetHairColor(0xdb2c00);
+		SetHairColor(0x452318);
 	}
 
 	#region Added / Update
