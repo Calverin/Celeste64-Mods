@@ -32,12 +32,16 @@ public static class Controls
 		Camera.Add(Keys.A, Keys.D, Keys.W, Keys.S);
 
 		Jump.Clear();
-		Jump.Add(0, Buttons.South, Buttons.North);
+		Jump.Add(0, Buttons.South, Buttons.North, Buttons.East, Buttons.West);
 		Jump.Add(Keys.C);
+		Jump.Add(Keys.Z);
+		Dash.Add(Keys.X);
+		Dash.Add(Keys.V);
 
 		Dash.Clear();
-		Dash.Add(0, Buttons.West, Buttons.East);
-		Dash.Add(Keys.X);
+		//Dash.Add(0, Buttons.West, Buttons.East);
+		//Dash.Add(Keys.X);
+		//Dash.Add(Keys.V);
 
 		Climb.Clear();
 		Climb.Add(0, Buttons.LeftShoulder, Buttons.RightShoulder);
