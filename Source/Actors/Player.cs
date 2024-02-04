@@ -991,7 +991,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 					{
 						npc.IsPlayerOver = true;
 
-						if (Controls.Climb.ConsumePress())
+						if (Controls.Jump.ConsumePress())
 						{
 							npc.Interact(this);
 							return;

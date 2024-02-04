@@ -8,27 +8,27 @@
 		{
 			"Face": "madeline/Default",
 			"Voice": "madeline/granny1_02_m1",
-			"Text": "It's nice to see you too, Granny."
+			"Text": "Granny!"
 		},
 		{
 			"Face": "granny/Default",
 			"Voice": "granny/granny1_03_g2",
-			"Text": "Hah. Hey kiddo, welcome back.\nIt's been a while."
+			"Text": "Oh. Hey Theo, didn't expect to see you out here.\nIt's been a while."
 		},
 		{
 			"Face": "madeline/Default",
 			"Voice": "madeline/granny1_04_m2",
-			"Text": "Yeah, I've been busy."
+			"Text": "Yeah, I heard Strawberry was coming in!."
 		},
 		{
 			"Face": "granny/Default",
 			"Voice": "granny/granny1_05_g3",
-			"Text": "I've heard!"
+			"Text": "Have you heard?"
 		},
 		{
 			"Face": "granny/Default",
 			"Voice": "granny/granny1_06_g4",
-			"Text": "Little miss fancy pants here is writing a BOOK!"
+			"Text": "Miss dashy pants is writing a BOOK!"
 		},
 		{
 			"Face": "madeline/Upset",
