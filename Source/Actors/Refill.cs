@@ -74,10 +74,11 @@ public class Refill : Actor, IHaveSprites, IPickup, IHaveModels, ICastPointShado
 	public void Pickup(Player player)
 	{
 		int count = IsDouble ? 2 : 1;
-		if (tCooldown <= 0 && player.Dashes < count)
+		if (tCooldown <= 0 && player.Jumps < count || player.Dashes < count)
 		{
 			UpdateOffScreen = true;
 			player.RefillDash(count);
+			player.RefillJump(count);
 			tCooldown = 4;
 			tCollect = 1.0f;
 			World.HitStun = 0.05f;

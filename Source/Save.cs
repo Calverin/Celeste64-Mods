@@ -6,7 +6,7 @@ namespace Celeste64;
 
 public class Save
 {
-	public const string FileName = "save.json";
+	public const string FileName = "save_theo.json";
 
 	/// <summary>
 	/// Stored data associated with a single level

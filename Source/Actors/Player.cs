@@ -12,19 +12,19 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	private const float PastMaxDeccel = 60;
 	private const float AirAccelMultMin = .5f;
 	private const float AirAccelMultMax = 1f;
-	private const float MaxSpeed = 64;
+	private const float MaxSpeed = 78;
 	private const float RotateThreshold = MaxSpeed * .2f;
 	private const float RotateSpeed = MathF.Tau * 1.5f;
 	private const float RotateSpeedAboveMax = MathF.Tau * .6f;
 	private const float Friction = 800;
 	private const float AirFrictionMult = .1f;
-	private const float Gravity = 600;
+	private const float Gravity = 500;
 	private const float MaxFall = -120;
 	private const float HalfGravThreshold = 100;
 	private const float JumpHoldTime = .1f;
-	private const float JumpSpeed = 90;
-	private const float JumpXYBoost = 10;
-	private const float CoyoteTime = .12f;
+	private const float JumpSpeed = 100;
+	private const float JumpXYBoost = 20;
+	private const float CoyoteTime = .18f;
 	private const float WallJumpXYSpeed = MaxSpeed * 1.3f;
 
 	private const float DashSpeed = 140;
@@ -68,8 +68,8 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	private const float FeatherExitZSpeed = 60;
 
 	static private readonly Color CNormal = 0x452318;
-	static private readonly Color CNoDash = 0x6ec0ff;
-	static private readonly Color CTwoDashes = 0xfa91ff;
+	static private readonly Color CNoDash = 0x63ace5;
+	static private readonly Color CTwoDashes = 0xc874cc;
 	static private readonly Color CRefillFlash = Color.White;
 	static private readonly Color CFeather = 0xf2d450;
 
@@ -947,6 +947,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 		velocity = velocity.WithXY(velXY);
 
 		dashes = Math.Max(dashes, 1);
+		jumps = Math.Max(jumps, 1);
 		CancelGroundSnap();
 	}
 
@@ -990,7 +991,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 					{
 						npc.IsPlayerOver = true;
 
-						if (Controls.Dash.ConsumePress())
+						if (Controls.Climb.ConsumePress())
 						{
 							npc.Interact(this);
 							return;
@@ -1166,7 +1167,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 		// jump & gravity
 		if (tCoyote > 0 && Controls.Jump.ConsumePress())
-			Jump();
+			Jump(false);
 		else if (Controls.Jump.ConsumePress())
 			Jump(true);
 		else if (WallJumpCheck())
@@ -1774,10 +1775,16 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 		velocity = velocity.WithXY(velXY);
 
 		// dashing
-		if (dashes > 0 && tDashCooldown <= 0 && Controls.Dash.ConsumePress())
+		//if (dashes > 0 && tDashCooldown <= 0 && Controls.Dash.ConsumePress())
+		//{
+		//	stateMachine.State = States.Dashing;
+		//	dashes--;
+		//	return;
+		//}
+		if (jumps > 0 && Controls.Jump.ConsumePress())
 		{
-			stateMachine.State = States.Dashing;
-			dashes--;
+			stateMachine.State = States.Normal;
+			Jump(true);
 			return;
 		}
 	}
@@ -1798,6 +1805,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 			stateMachine.State = States.FeatherStart;
 			featherZ = feather.Position.Z - 2;
 			dashes = Math.Max(dashes, 1);
+			jumps = Math.Max(jumps, 1);
 			Audio.Play(Sfx.sfx_feather_get, Position);
 		}
 	}
@@ -1889,6 +1897,13 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 			return;
 		}
 		*/
+
+		if (jumps > 0 && Controls.Jump.ConsumePress())
+		{
+			stateMachine.State = States.Normal;
+			Jump(true);
+			return;
+		}
 
 		// start climbing
 		if (Controls.Climb.Down && TryClimb())
