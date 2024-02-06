@@ -22,7 +22,8 @@
 		"OptionsZGuide": "Shadow-Guide",
 		"OptionsTimer": "Timer",
 		"OptionsBGM": "BGM",
-		"OptionsSFX": "SFX"
+		"OptionsSFX": "SFX",
+		"OptionsInvertCamera": "Inverted Camera"
 	},
 	"Dialog":
 	{

@@ -8,6 +8,14 @@ public class Save
 {
 	public const string FileName = "save_theo.json";
 
+	public enum InvertCameraOptions
+	{
+		None,
+		X,
+		Y,
+		Both
+	}
+
 	/// <summary>
 	/// Stored data associated with a single level
 	/// </summary>
@@ -69,6 +77,11 @@ public class Save
 	public int SfxVolume { get; set; } = 10;
 
 	/// <summary>
+	/// Invert the camera in given directions
+	/// </summary>
+	public InvertCameraOptions InvertCamera { get; set; } = InvertCameraOptions.None;
+
+	/// <summary>
 	/// Current Language ID
 	/// </summary>
 	public string Language = "english";
@@ -126,6 +139,11 @@ public class Save
 	public void ToggleZGuide()
 	{
 		ZGuide = !ZGuide;
+	}
+
+	public void SetCameraInverted(InvertCameraOptions value)
+	{
+		InvertCamera = value;
 	}
 
 	public void ToggleTimer()
@@ -191,6 +209,6 @@ public class Save
 	}
 }
 
-[JsonSourceGenerationOptions(WriteIndented = true)]
+[JsonSourceGenerationOptions(WriteIndented = true, AllowTrailingCommas = true, UseStringEnumConverter = true)]
 [JsonSerializable(typeof(Save))]
 internal partial class SaveContext : JsonSerializerContext {}

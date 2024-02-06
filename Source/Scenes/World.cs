@@ -82,6 +82,7 @@ public class World : Scene
 			optionsMenu.Add(new Menu.Toggle(Loc.Str("OptionsFullscreen"), Save.Instance.ToggleFullscreen, () => Save.Instance.Fullscreen));
 			optionsMenu.Add(new Menu.Toggle(Loc.Str("OptionsZGuide"), Save.Instance.ToggleZGuide, () => Save.Instance.ZGuide));
 			optionsMenu.Add(new Menu.Toggle(Loc.Str("OptionsTimer"), Save.Instance.ToggleTimer, () => Save.Instance.SpeedrunTimer));
+			optionsMenu.Add(new Menu.MultiSelect<Save.InvertCameraOptions>(Loc.Str("OptionsInvertCamera"), Save.Instance.SetCameraInverted, () => Save.Instance.InvertCamera));
 			optionsMenu.Add(new Menu.Spacer());
 			optionsMenu.Add(new Menu.Slider(Loc.Str("OptionsBGM"), 0, 10, () => Save.Instance.MusicVolume, Save.Instance.SetMusicVolume));
 			optionsMenu.Add(new Menu.Slider(Loc.Str("OptionsSFX"), 0, 10, () => Save.Instance.SfxVolume, Save.Instance.SetSfxVolume));
@@ -319,7 +320,7 @@ public class World : Scene
 		if (!Paused)
 		{
 			// start pause menu
-			if (Controls.Pause.Pressed && IsPauseEnabled)
+			if (Controls.Pause.ConsumePress() && IsPauseEnabled)
 			{
 				SetPaused(true);
 				return;
@@ -371,14 +372,16 @@ public class World : Scene
 		// unpause
 		else
 		{
-			if ((Controls.Pause.Pressed || Controls.Cancel.Pressed) && pauseMenu.IsInMainMenu)
+			if (Controls.Pause.ConsumePress() || (pauseMenu.IsInMainMenu && Controls.Cancel.ConsumePress()))
 			{
 				pauseMenu.CloseSubMenus();
 				SetPaused(false);
 				Audio.Play(Sfx.ui_unpause);
 			}
 			else
+			{
 				pauseMenu.Update();
+			}
 		}
 
 		debugUpdTimer.Stop();
@@ -443,12 +446,12 @@ public class World : Scene
 					continue;
 
 				// check against each triangle in the face
-				for (int i = 0; i < face.Indices.Count - 2; i ++)
+				for (int i = 0; i < face.VertexCount - 2; i ++)
 				{
 					if (Utils.RayIntersectsTriangle(point, direction, 
-						verts[face.Indices[0]], 
-						verts[face.Indices[i + 1]],
-						verts[face.Indices[i + 2]], out float dist))
+						verts[face.VertexStart + 0],
+						verts[face.VertexStart + i + 1],
+						verts[face.VertexStart + i + 2], out float dist))
 					{
 						// too far away
 						if (dist > distance)
@@ -510,10 +513,10 @@ public class World : Scene
 
 				WallHit? closestTriangleOnPlane = null;
 
-				for (int i = 0; i < face.Indices.Count - 2; i++)
+				for (int i = 0; i < face.VertexCount - 2; i++)
 				{
 					if (Utils.PlaneTriangleIntersection(flatPlane,
-						verts[face.Indices[0]], verts[face.Indices[i + 1]], verts[face.Indices[i + 2]],
+						verts[face.VertexStart + 0], verts[face.VertexStart + i + 1], verts[face.VertexStart + i + 2],
 						out var line0, out var line1))
 					{
 						var next = new Vec3(new Line(line0.XY(), line1.XY()).ClosestPoint(flatPoint), point.Z);
@@ -794,7 +797,7 @@ public class World : Scene
 					batch.PushMatrix(
 						Matrix3x2.CreateTranslation(0, -UI.IconSize / 2) * 
 						Matrix3x2.CreateScale(wiggle) * 
-						Matrix3x2.CreateTranslation(at + new Vec2(-60 * (1 - Ease.CubeOut(strawbCounterEase)), UI.IconSize / 2)));
+						Matrix3x2.CreateTranslation(at + new Vec2(-60 * (1 - Ease.Cube.Out(strawbCounterEase)), UI.IconSize / 2)));
 					UI.Strawberries(batch, Save.CurrentRecord.Strawberries.Count, Vec2.Zero);
 					batch.PopMatrix();
 				}
