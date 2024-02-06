@@ -36,42 +36,7 @@
 			{
 				"Face": "theo/Default",
 				"Voice": "theo/theo1_01_t1",
-				"Text": "Hey Granny!" // "Hehehehe!"
-			},
-			{
-				"Face": "theo/Default",
-				"Voice": "theo/theo1_04_t2",
-				"Text": "Hey Granny2!" // Heybaboybedee"
-			},
-			{
-				"Face": "theo/Default",
-				"Voice": "theo/theo1_06_t3",
-				"Text": "Hey Granny3!" // "Hehah heehee"
-			},
-			{
-				"Face": "theo/Default",
-				"Voice": "theo/theo1_07_t4", // "Heybabadebabadee babee"
-				"Text": "Hey Granny4!"
-			},
-			{
-				"Face": "theo/Default",
-				"Voice": "theo/theo1_08_t5", // "Beboy bebabadobedaboy, babadee"
-				"Text": "Hey Granny5!"
-			},
-			{
-				"Face": "theo/Default",
-				"Voice": "theo/theo1_09_t6", // "Bedoy badabedaedbebe badee"
-				"Text": "Hey Granny6!"
-			},
-			{
-				"Face": "theo/Default",
-				"Voice": "theo/theo1_12_t7", // "Heybee babee"
-				"Text": "Hey Granny7!"
-			},
-			{
-				"Face": "theo/Default",
-				"Voice": "theo/theo1_13_t8", // "Meepmeep hameep"
-				"Text": "Hey Granny8!"
+				"Text": "Hey Granny!"
 			},
 			{
 				"Face": "granny/Default",
@@ -110,13 +75,13 @@
 			},
 			{
 				"Face": "theo/Smug",
-				"Voice": "theo/theo1_06_t3",
+				"Voice": "theo/theo1_08_t5",
 				"Text": "Nah, I wanted to take some pictures.\nEverything has more depth out here."
 			},
 			{
 				"Face": "theo/Tired",
 				"Voice": "theo/theo1_09_t6",
-				"Text": "Besides, can't I come back to a crazy place\nwithout being interrogated?"
+				"Text": "But can't a guy just climb a mountain for fun?"
 			},
 			{
 				"Face": "granny/Default",
@@ -133,7 +98,7 @@
 			{
 				"Face": "theo/Default",
 				"Voice": "theo/theo1_01_t1",
-				"Text": "Lani!!"
+				"Text": "Lani!!!"
 			},
 			{
 				"Face": "lani/Happy",
@@ -173,7 +138,7 @@
 			{
 				"Face": "theo/Smug",
 				"Voice": "theo/theo1_09_t6",
-				"Text": "Well, mostly the mountain climbing hobby.\nBut I think you'd get along!"
+				"Text": "Well, mostly the mountain climbing hobby."
 			},
 			{
 				"Face": "lani/Happy",
@@ -183,7 +148,7 @@
 			{
 				"Face": "lani/Default",
 				"Voice": "madeline/theo1_11_m5",
-				"Text": "Would be nice to meet another grappling hook fan."
+				"Text": "Another grappling hook fan I hope?"
 			},
 			{
 				"Face": "theo/Tired",
@@ -193,7 +158,7 @@
 			{
 				"Face": "theo/Smug",
 				"Voice": "theo/theo1_07_t4",
-				"Text": "You should just wait to meet her yourself!\nSee ya Lani!"
+				"Text": "You should just meet her yourself.\nSee ya Lani!"
 			}
 		],
 		"Baddy1": [
@@ -241,7 +206,7 @@
 				"Voice": "madeline/baddy1_08_m5",
 				"Text": "Yeah, I guess I am."
 			},
-			
+
 			{
 				"Face": "baddy/Angry",
 				"Voice": "badeline/baddy1_09_b4",

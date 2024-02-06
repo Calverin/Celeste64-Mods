@@ -1,0 +1,8 @@
+"theo/theo1_01_t1" : "Hehehehe!"
+"theo/theo1_04_t2" : "Heybaboybedee"
+"theo/theo1_06_t3" : "Hehah heehee"
+"theo/theo1_07_t4" : "Heybabadebabadee babee"
+"theo/theo1_08_t5" : "Beboy bebabadobedaboy, babadee"
+"theo/theo1_09_t6" : "Bedoy badabedaedbebe badee"
+"theo/theo1_12_t7" : "Heybee babee"
+"theo/theo1_13_t8" : "Meepmeep hameep"

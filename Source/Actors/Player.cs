@@ -642,7 +642,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 		Hair.Color = color;
 		//Hair.Nodes = (InFeatherState ? 18 : (dashes >= 2 ? 16 : 10)); Madeline
-		Hair.Nodes = InFeatherState ? 8 : (dashes >= 2 ? 7 : 4);
+		Hair.Nodes = InFeatherState ? 8 : 4;
 	}
 
 	public void SweepTestMove(Vec3 delta, bool resolveImpact)
@@ -732,7 +732,8 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	{
 		if (jumps <= 0)
 			return;
-		//Position = Position with { Z = coyoteZ };
+		if (!inAir)
+			Position = Position with { Z = coyoteZ };
 		holdJumpSpeed = velocity.Z = JumpSpeed;
 		tHoldJump = JumpHoldTime;
 		tCoyote = 0;
@@ -742,6 +743,12 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 		if (inAir) {
 			jumps--;
+			for (int i = 0; i < 12; i++) {
+				var angle = Calc.AngleToVector((i / 12.0f) * MathF.Tau);
+				var at = Position + new Vec3(angle, 0) * 4;
+				var vel = (tPlatformVelocityStorage > 0 ? platformVelocity : Vec3.Zero) + new Vec3(angle, 0) * 85;
+				World.Request<Dust>().Init(at, vel);
+			}
 		}
 
 		var input = RelativeMoveInput;
