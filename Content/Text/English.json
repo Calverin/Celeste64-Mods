@@ -19,7 +19,7 @@
 		"PauseSaveQuit": "Save & Quit",
 		"OptionsTitle": "Options",
 		"OptionsFullscreen": "Fullscreen",
-		"OptionsZGuide": "Z-Guide",
+		"OptionsZGuide": "Shadow-Guide",
 		"OptionsTimer": "Timer",
 		"OptionsBGM": "BGM",
 		"OptionsSFX": "SFX"
@@ -33,49 +33,54 @@
 				"Text": "It's so cold out here\nI can see my farts."
 			},
 			{
-				"Face": "madeline/Default",
+				"Face": "theo/Default",
 				"Voice": "madeline/granny1_02_m1",
-				"Text": "It's nice to see you too, Granny."
+					"Text": "Hey Granny!"
 			},
 			{
 				"Face": "granny/Default",
 				"Voice": "granny/granny1_03_g2",
-				"Text": "Hah. Hey kiddo, welcome back.\nIt's been a while."
+				"Text": "Hey Theo, welcome back.\nIt's been a while."
 			},
 			{
-				"Face": "madeline/Default",
+				"Face": "theo/Upset",
 				"Voice": "madeline/granny1_04_m2",
 				"Text": "Yeah, I've been busy."
 			},
 			{
-				"Face": "granny/Default",
+				"Face": "theo/Tired",
+				"Voice": "theo/theo1_06_t3",
+				"Text": "People don't talk about how long it takes\nto get down from mountains..."
+			},
+			{
+				"Face": "granny/Laugh",
 				"Voice": "granny/granny1_05_g3",
-				"Text": "I've heard!"
+				"Text": "You're telling me!"
 			},
 			{
 				"Face": "granny/Default",
 				"Voice": "granny/granny1_06_g4",
-				"Text": "Little miss fancy pants here is writing a BOOK!"
+				"Text": "Have you heard Madeline's writing a book?"
 			},
 			{
-				"Face": "madeline/Upset",
+				"Face": "theo/Proud",
 				"Voice": "madeline/granny1_07_m3",
-				"Text": "Oh, that.\nThat's not a big thing..."
+				"Text": "Oh, I've heard all about it from Alex."
 			},
 			{
 				"Face": "granny/Default",
 				"Voice": "granny/granny1_08_g5",
-				"Text": "Uh huh. Is that why you're here?\nNervous about the big project?"
+				"Text": "Makes sense. Is that why you're here?\nYou wanted to check on her?"
 			},
 			{
-				"Face": "madeline/Default",
+				"Face": "theo/Smug",
 				"Voice": "madeline/granny1_09_m4",
-				"Text": "No, I'm weirdly zen about the book."
+				"Text": "Nah, I wanted to take some pictures.\nEverything has more depth out here."
 			},
 			{
-				"Face": "madeline/Upset",
+				"Face": "theo/Tired",
 				"Voice": "madeline/granny1_10_m5",
-				"Text": "Besides, can't I just revisit a beloved memory\nwithout being interrogated?"
+				"Text": "Besides, can't I come back to a crazy place\nwithout being interrogated?"
 			},
 			{
 				"Face": "granny/Default",
@@ -85,7 +90,7 @@
 			{
 				"Face": "granny/Default",
 				"Voice": "granny/granny1_12_g7",
-				"Text": "You have fun reminiscing then."
+				"Text": "You have fun visiting then."
 			}
 		],
 		"Granny2": [
