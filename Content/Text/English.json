@@ -236,7 +236,7 @@
 				"Text": "It's okay to be scared.\nTrying something new is difficult!"
 			},
 			{
-				"Face": "theo/Smug",
+				"Face": "theo/Default",
 				"Voice": "theo/theo1_09_t6",
 				"Text": "You two climb mountains! You do amazing things."
 			},
@@ -251,8 +251,8 @@
 				"Text": "I just want us to talk before doing something crazy."
 			},
 			{
-				"Face": "theo/Smug",
-				"Voice": "theo/theo1_01_t1",
+				"Face": "theo/Proud",
+				"Voice": "theo/theo1_12_t7",
 				"Text": "We're mountain climbers.\nCrazy is what we do!"
 			},
 			{
