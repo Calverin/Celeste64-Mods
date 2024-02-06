@@ -34,8 +34,43 @@
 			},
 			{
 				"Face": "theo/Default",
-				"Voice": "madeline/granny1_02_m1",
-					"Text": "Hey Granny!"
+				"Voice": "theo/theo1_01_t1",
+				"Text": "Hey Granny!" // "Hehehehe!"
+			},
+			{
+				"Face": "theo/Default",
+				"Voice": "theo/theo1_04_t2",
+				"Text": "Hey Granny2!" // Heybaboybedee"
+			},
+			{
+				"Face": "theo/Default",
+				"Voice": "theo/theo1_06_t3",
+				"Text": "Hey Granny3!" // "Hehah heehee"
+			},
+			{
+				"Face": "theo/Default",
+				"Voice": "theo/theo1_07_t4", // "Heybabadebabadee babee"
+				"Text": "Hey Granny4!"
+			},
+			{
+				"Face": "theo/Default",
+				"Voice": "theo/theo1_08_t5", // "Beboy bebabadobedaboy, babadee"
+				"Text": "Hey Granny5!"
+			},
+			{
+				"Face": "theo/Default",
+				"Voice": "theo/theo1_09_t6", // "Bedoy badabedaedbebe badee"
+				"Text": "Hey Granny6!"
+			},
+			{
+				"Face": "theo/Default",
+				"Voice": "theo/theo1_12_t7", // "Heybee babee"
+				"Text": "Hey Granny7!"
+			},
+			{
+				"Face": "theo/Default",
+				"Voice": "theo/theo1_13_t8", // "Meepmeep hameep"
+				"Text": "Hey Granny8!"
 			},
 			{
 				"Face": "granny/Default",
@@ -44,12 +79,12 @@
 			},
 			{
 				"Face": "theo/Upset",
-				"Voice": "madeline/granny1_04_m2",
+				"Voice": "theo/theo1_04_t2",
 				"Text": "Yeah, I've been busy."
 			},
 			{
 				"Face": "theo/Tired",
-				"Voice": "theo/theo1_06_t3",
+				"Voice": "theo/theo1_08_t5",
 				"Text": "People don't talk about how long it takes\nto get down from mountains..."
 			},
 			{
@@ -64,7 +99,7 @@
 			},
 			{
 				"Face": "theo/Proud",
-				"Voice": "madeline/granny1_07_m3",
+				"Voice": "theo/theo1_07_t4",
 				"Text": "Oh, I've heard all about it from Alex."
 			},
 			{
@@ -74,12 +109,12 @@
 			},
 			{
 				"Face": "theo/Smug",
-				"Voice": "madeline/granny1_09_m4",
+				"Voice": "theo/theo1_06_t3",
 				"Text": "Nah, I wanted to take some pictures.\nEverything has more depth out here."
 			},
 			{
 				"Face": "theo/Tired",
-				"Voice": "madeline/granny1_10_m5",
+				"Voice": "theo/theo1_09_t6",
 				"Text": "Besides, can't I come back to a crazy place\nwithout being interrogated?"
 			},
 			{
@@ -90,268 +125,76 @@
 			{
 				"Face": "granny/Default",
 				"Voice": "granny/granny1_12_g7",
-				"Text": "You have fun visiting then."
+				"Text": "You have fun just visiting then."
 			}
 		],
-		"Granny2": [
-			{
-				"Face": "granny/Default",
-				"Voice": "granny/granny2_01_g1",
-				"Text": "C'mon, what's really bothering you?"
-			},
-			{
-				"Face": "madeline/Angry",
-				"Voice": "madeline/granny2_02_m1",
-				"Text": "It's fine. I've got it under control."
-			},
-			{
-				"Face": "granny/Laugh",
-				"Voice": "granny/granny2_03_g2",
-				"Text": "Some things never change."
-			},
-			{
-				"Face": "madeline/Upset",
-				"Text": "..."
-			},
-			{
-				"Face": "madeline/Upset",
-				"Voice": "madeline/granny2_04_m2",
-				"Text": "It's just that...\nI'm taking a big step."
-			},
-			{
-				"Face": "madeline/Default",
-				"Voice": "madeline/granny2_05_m3",
-				"Text": "I know it's a good step.\nIt's what I want..."
-			},
-			{
-				"Face": "madeline/Upset",
-				"Voice": "madeline/granny2_06_m4",
-				"Text": "...But it still feels like...\n...like I'm stepping off a cliff."
-			},
-			{
-				"Face": "granny/Default",
-				"Voice": "granny/granny2_07_g3",
-				"Text": "Sounds like a leap of faith."
-			},
-			{
-				"Face": "madeline/Upset",
-				"Voice": "madeline/granny2_08_m5",
-				"Text": "Yeah... I guess it is."
-			},
-			{
-				"Face": "granny/Default",
-				"Voice": "granny/granny2_09_g4",
-				"Text": "You've always been brave."
-			},
-			{
-				"Face": "granny/Default",
-				"Voice": "granny/granny2_10_g5",
-				"Text": "But have you checked in\nwith that other Part of You?"
-			},
-			{
-				"Face": "madeline/Upset",
-				"Voice": "madeline/granny2_11_m6",
-				"Text": "I guess maybe that's why I'm here."
-			},
-			{
-				"Face": "granny/Default",
-				"Voice": "granny/granny2_12_g6",
-				"Text": "Where is that little weirdo, anyways?"
-			}
-		],
-		"Granny3": [
-			{
-				"Face": "granny/Default",
-				"Voice": "granny/granny3_01_g1",
-				"Text": "You know I always appreciate\nyou thinkin' of me..."
-			},
-			{
-				"Face": "granny/Default",
-				"Voice": "granny/granny3_02_g2",
-				"Text": "But next time, could you\nmake it a bit warmer here?"
-			},
-			{
-				"Face": "madeline/Default",
-				"Voice": "madeline/granny3_03_m1",
-				"Text": "That's not how I remember it."
-			}
-		],
-
 		"Theo1": [
 			{
 				"Face": "theo/Default",
 				"Voice": "theo/theo1_01_t1",
-				"Text": "Strawberry!!"
+				"Text": "Lani!!"
 			},
 			{
-				"Face": "madeline/Happy",
+				"Face": "lani/Happy",
 				"Voice": "madeline/theo1_02_m1",
-				"Text": "Theo!"
+				"Text": "Hey Theo!"
 			},
 			{
-				"Face": "madeline/Happy",
+				"Face": "lani/Happy",
 				"Voice": "madeline/theo1_03_m2",
-				"Text": "It's so good to see you."
-			},
-			{
-				"Face": "theo/Smug",
-				"Voice": "theo/theo1_04_t2",
-				"Text": "Likewise, stranger."
-			},
-			{
-				"Face": "madeline/Upset",
-				"Voice": "madeline/theo1_05_m3",
-				"Text": "I forgot to respond\nto you again, didn't I?"
-			},
-			{
-				"Face": "theo/Default",
-				"Voice": "theo/theo1_06_t3",
-				"Text": "No no, it's chill."
-			},
-			{
-				"Face": "theo/Smug",
-				"Voice": "theo/theo1_07_t4",
-				"Text": "This is why I hooked you\nand Alex up before I left."
-			},
-			{
-				"Face": "theo/Proud",
-				"Voice": "theo/theo1_08_t5",
-				"Text": "Now I get all my Maddy updates\nvia my neurotic sister."
+				"Text": "It's really great to see you."
 			},
 			{
 				"Face": "theo/Smug",
 				"Voice": "theo/theo1_09_t6",
-				"Text": "She calls me every Saturday\nat 2:00, like clockwork."
+				"Text": "Yeah, funny seeing you up here."
 			},
 			{
-				"Face": "madeline/Happy",
-				"Voice": "madeline/theo1_10_m4",
-				"Text": "Clever plan!"
-			},
-			{
-				"Face": "madeline/Default",
-				"Voice": "madeline/theo1_11_m5",
-				"Text": "Alex is... the best."
-			},
-			{
-				"Face": "theo/Smug",
-				"Voice": "theo/theo1_12_t7",
-				"Text": "You two are so gay."
+				"Face": "lani/Default",
+				"Voice": "madeline/theo1_05_m3",
+				"Text": "What? I'm allowed to hang out on towers."
 			},
 			{
 				"Face": "theo/Default",
-				"Voice": "theo/theo1_13_t8",
-				"Text": "I love that for you."
-			}
-		],
-		"Theo2": [
+				"Voice": "theo/theo1_01_t1",
+				"Text": "Totally fair."
+			},
+			{
+				"Face": "theo/Smug",
+				"Voice": "theo/theo1_07_t4",
+				"Text": "Hey maybe you'll finally be able to meet Madeline!"
+			},
+			{
+				"Face": "theo/Proud",
+				"Voice": "theo/theo1_04_t2",
+				"Text": "You two have a lot in common."
+			},
+			{
+				"Face": "theo/Smug",
+				"Voice": "theo/theo1_09_t6",
+				"Text": "Well, mostly the mountain climbing hobby.\nBut I think you'd get along!"
+			},
+			{
+				"Face": "lani/Happy",
+				"Voice": "madeline/theo1_10_m4",
+				"Text": "It'd be great to meet her!"
+			},
+			{
+				"Face": "lani/Default",
+				"Voice": "madeline/theo1_11_m5",
+				"Text": "Would be nice to meet another grappling hook fan."
+			},
 			{
 				"Face": "theo/Tired",
-				"Voice": "theo/theo2_01_t1",
-				"Text": "Climbing up this tower\nwas NOT easy for me."
-			},
-			{
-				"Face": "theo/Proud",
-				"Voice": "theo/theo2_02_t2",
-				"Text": "But I got some bomb shots."
-			},
-			{
-				"Face": "madeline/Happy",
-				"Voice": "madeline/theo2_03_m1",
-				"Text": "That's great!"
-			},
-			{
-				"Face": "theo/Default",
-				"Voice": "theo/theo2_04_t3",
-				"Text": "These'll really shine\nin the gallery."
-			},
-			{
-				"Face": "madeline/Happy",
-				"Voice": "madeline/theo2_05_m2",
-				"Text": "You're doing a gallery show!?"
-			},
-			{
-				"Face": "theo/Proud",
-				"Voice": "theo/theo2_06_t4",
-				"Text": "Oh yeah, hopefully the first of many!"
-			},
-			{
-				"Face": "theo/Default",
-				"Voice": "theo/theo2_07_t5",
-				"Text": "It's just pics from my travels."
+				"Voice": "theo/theo1_13_t8",
+				"Text": "Well she doesn't use a grappling hook, she-"
 			},
 			{
 				"Face": "theo/Smug",
-				"Voice": "theo/theo2_08_t7",
-				"Text": "With a theme of\n'Humanity Amongst Urban Isolation'"
-			},
-			{
-				"Face": "theo/Default",
-				"Voice": "theo/theo2_09_t8",
-				"Text": "It's these soft, colorful portraits of\nrad people I've met in my travels..."
-			},
-			{
-				"Face": "theo/Upset",
-				"Voice": "theo/theo2_10_t9",
-				"Text": "...contrasted with the harsh\ncapitalist brutality of the modern city."
-			},
-			{
-				"Face": "madeline/Happy",
-				"Voice": "madeline/theo2_11_m3",
-				"Text": "Theo!! That sounds so... artsy!"
-			},
-			{
-				"Face": "theo/Smug",
-				"Voice": "theo/theo2_12_t10",
-				"Text": "Don't sound so surprised."
-			},
-			{
-				"Face": "theo/Proud",
-				"Voice": "theo/theo2_13_t11",
-				"Text": "I contain multitudes."
+				"Voice": "theo/theo1_07_t4",
+				"Text": "You should just wait to meet her yourself!\nSee ya Lani!"
 			}
 		],
-		"Theo3": [
-			{
-				"Face": "theo/Default",
-				"Voice": "theo/theo3_01_t1",
-				"Text": "So I hear you're writing a book..."
-			},
-			{
-				"Face": "theo/Proud",
-				"Voice": "theo/theo3_02_t2",
-				"Text": "Am I in it?"
-			},
-			{
-				"Face": "madeline/Default",
-				"Voice": "madeline/theo3_03_m1",
-				"Text": "No, it's not really like that,\nit's more metaphorical."
-			},
-			{
-				"Face": "theo/Smug",
-				"Voice": "theo/theo3_04_t3",
-				"Text": "Is Alex in it?"
-			},
-			{
-				"Face": "madeline/Upset",
-				"Text": "..."
-			},
-			{
-				"Face": "theo/Proud",
-				"Voice": "theo/theo3_05_t4",
-				"Text": "She's totally in it."
-			},
-			{
-				"Face": "theo/Smug",
-				"Voice": "theo/theo3_06_t5",
-				"Text": "That is SO adorable."
-			},
-			{
-				"Face": "madeline/Angry",
-				"Text": "..."
-			}
-		],
-
 		"Baddy1": [
 			{
 				"Face": "madeline/Default",
@@ -375,28 +218,29 @@
 			{
 				"Face": "baddy/UncertainB",
 				"Voice": "badeline/baddy1_04_b2",
-				"Text": "Are we really\ngoing to do this?"
+				"Text": "You're supposed to say something back."
 			},
 			{
 				"Face": "madeline/Upset",
 				"Voice": "madeline/baddy1_05_m3",
-				"Text": "Yeah."
+				"Text": "Sorry, I'm not used to seeing you around without her."
 			},
 			{
 				"Face": "madeline/Default",
 				"Voice": "madeline/baddy1_06_m4",
-				"Text": "I think we are."
+				"Text": "I'm doing okay."
 			},
 			{
 				"Face": "baddy/UncertainA",
 				"Voice": "badeline/baddy1_07_b3",
-				"Text": "You always make us do hard things."
+				"Text": "You're worried about us, huh?"
 			},
 			{
 				"Face": "madeline/Upset",
 				"Voice": "madeline/baddy1_08_m5",
-				"Text": "Yeah, I guess I do."
+				"Text": "Yeah, I guess I am."
 			},
+			
 			{
 				"Face": "baddy/Angry",
 				"Voice": "badeline/baddy1_09_b4",
@@ -475,91 +319,6 @@
 				"Text": "Let's... let's do it."
 			}
 		],
-		"Baddy2": [
-			{
-				"Face": "madeline/Happy",
-				"Voice": "madeline/baddy2_01_m1",
-				"Text": "It's nice to be back."
-			},
-			{
-				"Face": "baddy/UncertainB",
-				"Voice": "badeline/baddy2_02_b1",
-				"Text": "Yeah, even this messed up\ncity still feels like home."
-			},
-			{
-				"Face": "baddy/UncertainA",
-				"Voice": "badeline/baddy2_03_b2",
-				"Text": "I don't remember it being\nso floaty and... 3D though."
-			},
-			{
-				"Face": "madeline/Default",
-				"Voice": "madeline/baddy2_04_m2",
-				"Text": "Memories aren't perfect."
-			},
-			{
-				"Face": "madeline/Upset",
-				"Voice": "madeline/baddy2_05_m3",
-				"Text": "And yeah, maybe I've been\nplaying too many old games lately."
-			},
-			{
-				"Face": "baddy/UncertainA",
-				"Voice": "badeline/baddy2_06_b3",
-				"Text": "Feeling nostalgic, are we?"
-			},
-			{
-				"Face": "madeline/Upset",
-				"Voice": "madeline/baddy2_07_m4",
-				"Text": "I guess I'm trying to\nreconnect with childhood Maddy."
-			},
-			{
-				"Face": "baddy/Resolved",
-				"Voice": "badeline/baddy2_08_b4",
-				"Text": "It's nice to retrace your\nsteps before a big decision."
-			},
-			{
-				"Face": "madeline/Default",
-				"Voice": "madeline/baddy2_09_m5",
-				"Text": "Yeah, it helps me keep perspective."
-			}
-		],
-		"Baddy3": [
-			{
-				"Face": "baddy/UncertainA",
-				"Voice": "badeline/baddy3_01_b1",
-				"Text": "It's still scary, but..."
-			},
-			{
-				"Face": "baddy/UncertainB",
-				"Voice": "badeline/baddy3_02_b2",
-				"Text": "I think I'm starting\nto feel excited about this."
-			},
-			{
-				"Face": "madeline/Happy",
-				"Voice": "madeline/baddy3_03_m1",
-				"Text": "It IS exciting!"
-			},
-			{
-				"Face": "madeline/Default",
-				"Voice": "madeline/baddy3_04_m2",
-				"Text": "We've always wanted this."
-			},
-			{
-				"Face": "madeline/Default",
-				"Voice": "madeline/baddy3_05_m3",
-				"Text": "We just couldn't\narticulate it until now."
-			},
-			{
-				"Face": "baddy/UncertainA",
-				"Voice": "badeline/baddy3_06_b3",
-				"Text": "Yeah, you're right."
-			},
-			{
-				"Face": "baddy/Resolved",
-				"Voice": "badeline/baddy3_07_b4",
-				"Text": "Maybe... maybe it'll be okay."
-			}
-		],
-
 		"Sign1": [
 			{
 				"Face": "signpost",
@@ -668,12 +427,12 @@
 			{
 				"Face": "signpost",
 				"Voice": "sign/general_07",
-				"Text": "The DASH JUMP is a long, low leap.\nGive it a shot!"
+				"Text": "Wait, you can't dash, can you?"
 			},
 			{
 				"Face": "signpost",
 				"Voice": "sign/snark_01",
-				"Text": "Or don't.\nI'm a sign, not a cop."
+				"Text": "Sorry buddy, I had you confused for someone else."
 			}
 		],
 		"Sign4": [
@@ -708,17 +467,16 @@
 				"Text": "I surely don't know, for\nI am but a humble signpost."
 			}
 		],
-
 		"CreditsSign": [
 			{
 				"Face": "signpost",
 				"Voice": "credits/credits_01",
-				"Text": "Celeste 64: Fragments of the Mountain"
+				"Text": "Celeste 64: Theo is on the Mountain"
 			},
 			{
 				"Face": "signpost",
 				"Voice": "credits/credits_02",
-				"Text": "Created in a week(ish) by the Celeste team"
+				"Text": "Original game created in a week(ish) by the Celeste team"
 			},
 			{
 				"Face": "calverin",
@@ -779,6 +537,11 @@
 				"Face": "signpost",
 				"Voice": "credits/credits_13",
 				"Text": "And lastly, thank you to Celeste players everywhere.\nYour love and passion for our little game\ncontinues to inspire us."
+			},
+			{
+				"Face": "signpost",
+				"Voice": "madeline/theo1_02_m1",
+				"Text": "And even more lastly, thanks to the Celeste Classic Discord!\nYou all are awesome and always supportive of my\nsilly mods.\n:yadelie:"
 			}
 		]
 	}

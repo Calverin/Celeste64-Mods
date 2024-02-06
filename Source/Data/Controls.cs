@@ -35,8 +35,8 @@ public static class Controls
 		Jump.Add(0, Buttons.South, Buttons.North, Buttons.East, Buttons.West);
 		Jump.Add(Keys.C);
 		Jump.Add(Keys.Z);
-		Dash.Add(Keys.X);
-		Dash.Add(Keys.V);
+		Jump.Add(Keys.X);
+		Jump.Add(Keys.V);
 
 		Dash.Clear();
 		//Dash.Add(0, Buttons.West, Buttons.East);
