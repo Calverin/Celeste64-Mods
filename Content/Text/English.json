@@ -163,9 +163,9 @@
 		],
 		"Baddy1": [
 			{
-				"Face": "madeline/Default",
-				"Voice": "madeline/baddy1_01_m1",
-				"Text": "Hey."
+				"Face": "theo/Default",
+				"Voice": "theo/theo1_04_t2",
+				"Text": "Badeline?!"
 			},
 			{
 				"Face": "baddy/UncertainB",
@@ -173,9 +173,9 @@
 				"Text": "Hey."
 			},
 			{
-				"Face": "madeline/Upset",
-				"Voice": "madeline/baddy1_03_m2",
-				"Text": "How're you holding up?"
+				"Face": "baddy/UncertainB",
+				"Voice": "badeline/baddy1_04_b2",
+				"Text": "How are you Theo?"
 			},
 			{
 				"Face": "baddy/UncertainA",
@@ -187,14 +187,14 @@
 				"Text": "You're supposed to say something back."
 			},
 			{
-				"Face": "madeline/Upset",
-				"Voice": "madeline/baddy1_05_m3",
+				"Face": "theo/Upset",
+				"Voice": "theo/theo1_09_t6",
 				"Text": "Sorry, I'm not used to seeing you around without her."
 			},
 			{
-				"Face": "madeline/Default",
-				"Voice": "madeline/baddy1_06_m4",
-				"Text": "I'm doing okay."
+				"Face": "theo/Default",
+				"Voice": "theo/theo1_06_t3",
+				"Text": "I'm alright though."
 			},
 			{
 				"Face": "baddy/UncertainA",
@@ -202,69 +202,73 @@
 				"Text": "You're worried about us, huh?"
 			},
 			{
-				"Face": "madeline/Upset",
-				"Voice": "madeline/baddy1_08_m5",
+				"Face": "theo/Upset",
+				"Voice": "theo/theo1_13_t8",
 				"Text": "Yeah, I guess I am."
 			},
 
 			{
 				"Face": "baddy/Angry",
 				"Voice": "badeline/baddy1_09_b4",
-				"Text": "Why can't you just be happy?"
+				"Text": "She's trying something... difficult."
 			},
 			{
 				"Face": "baddy/UncertainA",
 				"Voice": "badeline/baddy1_10_b5",
-				"Text": "Why go through all\nthis effort, and pain,\nand... CHANGE."
+				"Text": "She's trying so hard.\nBut she's not willing to admit...\na-admit..."
 			},
 			{
-				"Face": "madeline/Upset",
+				"Face": "theo/Upset",
 				"Text": "..."
 			},
 			{
-				"Face": "madeline/Upset",
-				"Voice": "madeline/baddy1_11_m6",
-				"Text": "I don't know if I have\na satisfying answer for you."
+				"Face": "theo/Upset",
+				"Voice": "theo/theo1_12_t7",
+				"Text": "Admit that you're scared?"
 			},
 			{
-				"Face": "madeline/Upset",
-				"Voice": "madeline/baddy1_12_m7",
-				"Text": "I can't keep trying to JUSTIFY this,\nit just goes around in circles."
+				"Face": "baddy/UncertainB",
+				"Text": "..."
 			},
 			{
-				"Face": "madeline/Default",
-				"Voice": "madeline/baddy1_13_m8",
-				"Text": "At the end of the day, it feels right."
+				"Face": "theo/Default",
+				"Voice": "theo/theo1_08_t5",
+				"Text": "It's okay to be scared.\nTrying something new is difficult!"
 			},
 			{
-				"Face": "madeline/Upset",
-				"Voice": "madeline/baddy1_14_m9",
-				"Text": "That's all I really have for you."
+				"Face": "theo/Smug",
+				"Voice": "theo/theo1_09_t6",
+				"Text": "You two climb mountains! You do amazing things."
+			},
+			{
+				"Face": "theo/Proud",
+				"Voice": "theo/theo1_07_t4",
+				"Text": "It may be tough, but you'll get through it."
 			},
 			{
 				"Face": "baddy/UncertainB",
 				"Voice": "badeline/baddy1_15_b6",
-				"Text": "I suppose that's as\ngood a reason as any."
+				"Text": "I just want us to talk before doing something crazy."
 			},
 			{
-				"Face": "madeline/Default",
-				"Voice": "madeline/baddy1_16_m10",
-				"Text": "I want you to come with me."
+				"Face": "theo/Smug",
+				"Voice": "theo/theo1_01_t1",
+				"Text": "We're mountain climbers.\nCrazy is what we do!"
 			},
 			{
-				"Face": "madeline/Happy",
-				"Voice": "madeline/baddy1_17_m11",
-				"Text": "Please, I'll make space for you."
+				"Face": "theo/Tired",
+				"Voice": "theo/theo1_04_t2",
+				"Text": "Just talk it out and you'll find a way."
 			},
 			{
-				"Face": "madeline/Default",
-				"Voice": "madeline/baddy1_18_m12",
+				"Face": "theo/Proud",
+				"Voice": "theo/theo1_13_t8",
 				"Text": "You're allowed to be afraid."
 			},
 			{
 				"Face": "baddy/UncertainB",
 				"Voice": "badeline/baddy1_19_b7",
-				"Text": "I know that we need this."
+				"Text": "But why doesn't she look afraid?"
 			},
 			{
 				"Face": "baddy/UncertainB",
@@ -273,16 +277,17 @@
 			{
 				"Face": "baddy/UncertainA",
 				"Voice": "badeline/baddy1_20_b8",
-				"Text": "Thanks for coming to get me."
+				"Text": "I'm doing enough worrying for the both of us, huh?"
 			},
 			{
 				"Face": "baddy/UncertainB",
-				"Text": "..."
+				"Voice": "badeline/baddy1_02_b1",
+				"Text": "Thanks Theo..."
 			},
 			{
 				"Face": "baddy/UncertainA",
 				"Voice": "badeline/baddy1_21_b9",
-				"Text": "Let's... let's do it."
+				"Text": "It's good... good to see you."
 			}
 		],
 		"Sign1": [
@@ -447,7 +452,7 @@
 			{
 				"Face": "calverin",
 				"Voice": "granny/granny1_01_g1",
-				"Text": "Mod by Calverin in 2 days(ish), Theo would be proud.\n(At least I hope so, haha...)"
+				"Text": "Mod by Calverin over 3 days(ish), Theo would be proud.\n(At least I hope so, haha...)"
 			},
 			{
 				"Face": "signpost",
@@ -507,7 +512,7 @@
 			{
 				"Face": "signpost",
 				"Voice": "madeline/theo1_02_m1",
-				"Text": "And even more lastly, thanks to the Celeste Classic Discord!\nYou all are awesome and always supportive of my\nsilly mods.\n:yadelie:"
+				"Text": "And even more lastly, thanks to the Celeste Classic Discord!\nYou all are awesome and always supportive of my silly mods.\n:yadelie:"
 			}
 		]
 	}
