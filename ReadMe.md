@@ -3,7 +3,7 @@ This is the source code and general information for *Celeste 64: Fragments of th
 
 ## This is a mod by Calverin that adds Theo into the game as the main character! He can't dash but he gets some extra jumps to make up for it!
 
-You can find prebuilt version of the game on [itch.io](https://maddymakesgamesinc.itch.io/celeste64).
+You can find prebuilt version of the original game on [itch.io](https://maddymakesgamesinc.itch.io/celeste64).
 
 ### Installation
  - You need [.NET 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
@@ -40,4 +40,4 @@ You can find prebuilt version of the game on [itch.io](https://maddymakesgamesin
  - The Celeste IP and everything in the `Content` folder are owned by [Maddy Makes Games, Inc](https://www.maddymakesgames.com/).
  - The `Source` folder, with exceptions where noted, is [licensed under MIT](Source/License.txt).
  - The `Source/Audio/FMOD` folder contains bindings and binaries from FMOD.
- - We're fine with non-commercial Mods / Levels / Fan Games using assets from the `Content` folder as long as it's clear it is not made by the Celeste team or endorsed by us.
+ - This mod is not by the EXOK team and is not affiliated in any way. It is a fan project and is not for profit. Look out for Celeste 128, coming soon(ish)!
