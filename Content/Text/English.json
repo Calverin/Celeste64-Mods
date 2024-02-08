@@ -252,16 +252,16 @@
 			},
 			{
 				"Face": "theo/Proud",
-				"Voice": "theo/theo1_12_t7",
+				"Voice": "theo/theo1_08_t5",
 				"Text": "We're mountain climbers.\nCrazy is what we do!"
 			},
 			{
 				"Face": "theo/Tired",
 				"Voice": "theo/theo1_04_t2",
-				"Text": "Just talk it out and you'll find a way."
+				"Text": "I know that you'll find a way."
 			},
 			{
-				"Face": "theo/Proud",
+				"Face": "theo/Default",
 				"Voice": "theo/theo1_13_t8",
 				"Text": "You're allowed to be afraid."
 			},
@@ -510,9 +510,9 @@
 				"Text": "And lastly, thank you to Celeste players everywhere.\nYour love and passion for our little game\ncontinues to inspire us."
 			},
 			{
-				"Face": "signpost",
+				"Face": "yadelie",
 				"Voice": "granny/granny1_01_g1",
-				"Text": "And even more lastly, thanks to the Celeste Classic Discord!\nYou all are awesome and always supportive of my silly mods.\n:yadelie:"
+				"Text": "And even more lastly, thanks to the Celeste Classic Discord!\nYou are all awesome and always supportive of my silly mods.\nThanks for playing!"
 			}
 		]
 	}
