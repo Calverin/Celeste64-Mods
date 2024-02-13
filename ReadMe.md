@@ -1,7 +1,7 @@
-# Celeste 64: Theo is on the Mountain
+# Celeste 128: Lani's Trek
 This is the source code and general information for *Celeste 64: Fragments of the Mountain*, a game made by the original Celeste developers in under 2 weeks for Celeste's 6th Anniversary. We haven't done a lot of 3D development so much of this is not very optimized, it's coded in libraries mostly intended for 2D games, and we put it all together very, very quickly. Consider this similar to a weekend jam game, so experiment and learn at your own risk!  
 
-## This is a mod by Calverin that adds Theo into the game as the main character! He can't dash but he gets some extra jumps to make up for it!
+## This is a mod by Calverin that adds Lani into the game as the main character! She can't dash but her trusty grappling hook should help her out along the way.
 
 You can find prebuilt version of the original game on [itch.io](https://maddymakesgamesinc.itch.io/celeste64).
 

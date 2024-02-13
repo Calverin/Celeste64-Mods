@@ -1,4 +1,6 @@
 
+using Sledge.Formats;
+
 namespace Celeste64;
 
 /// <summary>
@@ -17,28 +19,32 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	private const float RotateSpeed = MathF.Tau * 1.5f;
 	private const float RotateSpeedAboveMax = MathF.Tau * .6f;
 	private const float Friction = 800;
-	private const float AirFrictionMult = .1f;
-	private const float Gravity = 500;
-	private const float MaxFall = -120;
+	private const float AirFrictionMult = .2f;
+	private const float Gravity = 800;
+	private const float MaxFall = -180;
 	private const float HalfGravThreshold = 100;
 	private const float JumpHoldTime = .1f;
-	private const float JumpSpeed = 100;
+	private const float JumpSpeed = 80;
 	private const float JumpXYBoost = 20;
 	private const float CoyoteTime = .18f;
 	private const float WallJumpXYSpeed = MaxSpeed * 1.3f;
 
-	private const float DashSpeed = 140;
-	private const float DashEndSpeedMult = .75f;
-	private const float DashTime = .2f;
-	private const float DashResetCooldown = .2f;
-	private const float JumpResetCooldown = .2f;
-	private const float DashCooldown = .1f;
+	private const float HookSpeed = 60.0f;
+	private const float HookSpeedMax = 100.0f;
+	private const float HookSpeedAccel = 4.0f;
+	private const float HookLength = 30.0f;
+
+	private const float GrappleSpeed = 100;
+	private const float GrappleEndSpeedMult = .75f;
+	private const float GrappleCooldown = .1f;
 	private const float DashRotateSpeed = MathF.Tau * .3f;
 
-	private const float DashJumpSpeed = 40;
-	private const float DashJumpHoldSpeed = 20;
-	private const float DashJumpHoldTime = .3f;
-	private const float DashJumpXYBoost = 16;
+	private const float GrappleJumpSpeed = 160;
+	private const float GrappleJumpHoldSpeed = 30;
+	private const float GrappleJumpHoldTime = .3f;
+	private const float GrappleJumpXYBoost = 16;
+
+	private const float NoGrappleJumpTime = .1f;
 
 	private const float SkidDotThreshold = -.7f;
 	private const float SkiddingStartAccel = 300;
@@ -49,7 +55,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	private const float SkidJumpXYSpeed = MaxSpeed * 1.4f;
 
 	private const float WallPushoutDist = 3;
-	private const float ClimbCheckDist = 4;
+	private const float ClimbCheckDist = 8;
 	private const float ClimbSpeed = 40;
 	private const float ClimbHopUpSpeed = 80;
 	private const float ClimbHopForwardSpeed = 40;
@@ -67,10 +73,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	private const float FeatherExitXYMult = .5f;
 	private const float FeatherExitZSpeed = 60;
 
-	static private readonly Color CNormal = 0x452318;
-	static private readonly Color CNoDash = 0x63ace5;
-	static private readonly Color CTwoDashes = 0xc874cc;
-	static private readonly Color CRefillFlash = Color.White;
+	static private readonly Color CNormal = 0x1d2b53;
 	static private readonly Color CFeather = 0xf2d450;
 
 	#endregion
@@ -87,7 +90,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 		public Trail()
 		{
-			Model = new(Assets.Models["player"]);
+			Model = new(Assets.Models["lani"]);
 			Model.Flags = ModelFlags.Transparent;
 			Model.MakeMaterialsUnique();
 			foreach (var mat in Model.Materials)
@@ -112,7 +115,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	private static Vec3 storedCameraForward;
 	private static float storedCameraDistance;
 
-	private enum States { Normal, Dashing, Skidding, Climbing, StrawbGet, FeatherStart, Feather, Respawn, Dead, StrawbReveal, Cutscene, Bubble, Cassette };
+	private enum States { Normal, Throwing, Grappling, Skidding, Climbing, StrawbGet, FeatherStart, Feather, Respawn, Dead, StrawbReveal, Cutscene, Bubble, Cassette };
 	private enum Events { Land };
 
 	public bool Dead = false;
@@ -197,7 +200,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 		// setup model
 		{
-			Model = new(Assets.Models["theo"]);
+			Model = new(Assets.Models["lani"]);
 			Model.SetBlendDuration("Idle", "Dash", 0.05f);
 			Model.SetBlendDuration("Idle", "Run", 0.2f);
 			Model.SetBlendDuration("Run", "Skid", .125f);
@@ -211,7 +214,8 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 		stateMachine = new();
 		stateMachine.InitState(States.Normal, StNormalUpdate, StNormalEnter, StNormalExit);
-		stateMachine.InitState(States.Dashing, StDashingUpdate, StDashingEnter, StDashingExit);
+		stateMachine.InitState(States.Throwing, StThrowingUpdate, StThrowingEnter);
+		stateMachine.InitState(States.Grappling, StGrapplingUpdate, StGrapplingEnter, StGrapplingExit);
 		stateMachine.InitState(States.Skidding, StSkiddingUpdate, StSkiddingEnter, StSkiddingExit);
 		stateMachine.InitState(States.Climbing, StClimbingUpdate, StClimbingEnter, StClimbingExit);
 		stateMachine.InitState(States.StrawbGet, StStrawbGetUpdate, StStrawbGetEnter, StStrawbGetExit, StStrawbGetRoutine);
@@ -322,14 +326,8 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 				tCoyote -= Time.Delta;
 			if (tHoldJump > 0)
 				tHoldJump -= Time.Delta;
-			if (tDashCooldown > 0)
-				tDashCooldown -= Time.Delta;
-			if (tDashResetCooldown > 0)
-				tDashResetCooldown -= Time.Delta;
-			if (tJumpResetCooldown > 0)
-				tJumpResetCooldown -= Time.Delta;
-			if (tDashResetFlash > 0)
-				tDashResetFlash -= Time.Delta;
+			if (tGrappleCooldown > 0)
+				tGrappleCooldown -= Time.Delta;
 			if (tNoMove > 0)
 				tNoMove -= Time.Delta;
 			if (tPlatformVelocityStorage > 0)
@@ -416,10 +414,6 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 				groundNormal = normal;
 				tCoyote = CoyoteTime;
 				coyoteZ = Position.Z;
-				if (tDashResetCooldown <= 0)
-					RefillDash();
-				if (tJumpResetCooldown <= 0)
-					RefillJump();
 			}
 			else
 				groundNormal = Vec3.UnitZ;
@@ -500,17 +494,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 			if (stateMachine.State != States.Feather && stateMachine.State != States.FeatherStart)
 			{
-				Color color;
-				if (tDashResetFlash > 0)
-					color = CRefillFlash;
-				else if (jumps == 1)
-					color = CNormal;
-				else if (jumps == 0)
-					color = CNoDash;
-				else
-					color = CTwoDashes;
-
-				SetHairColor(color);
+				SetHairColor(CNormal);
 			}
 		}
 
@@ -641,7 +625,6 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 		}
 
 		Hair.Color = color;
-		//Hair.Nodes = (InFeatherState ? 18 : (dashes >= 2 ? 16 : 10)); Madeline
 		Hair.Nodes = InFeatherState ? 8 : 4;
 	}
 
@@ -730,8 +713,6 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 	private void Jump(bool inAir = false)
 	{
-		if (jumps <= 0)
-			return;
 		if (!inAir)
 			Position = Position with { Z = coyoteZ };
 		holdJumpSpeed = velocity.Z = JumpSpeed;
@@ -739,10 +720,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 		tCoyote = 0;
 		autoJump = false;
 
-		tJumpResetCooldown = JumpResetCooldown;
-
 		if (inAir) {
-			jumps--;
 			for (int i = 0; i < 12; i++) {
 				var angle = Calc.AngleToVector((i / 12.0f) * MathF.Tau);
 				var at = Position + new Vec3(angle, 0) * 4;
@@ -806,29 +784,28 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 		Audio.Play(Sfx.sfx_jump_skid, Position);
 	}
 
-	private void DashJump()
+	private void GrappleJump()
 	{
-		Position = Position with { Z = coyoteZ };
-		velocity.Z = DashJumpSpeed;
-		holdJumpSpeed = DashJumpHoldSpeed;
-		tHoldJump = DashJumpHoldTime;
+		//Position = Position with { Z = coyoteZ };
+		velocity.Z = GrappleJumpSpeed;
+		holdJumpSpeed = GrappleJumpHoldSpeed;
+		tHoldJump = GrappleJumpHoldTime;
 		tCoyote = 0;
 		autoJump = false;
-		dashes = 1;
 
-		if (DashJumpXYBoost != 0)
+		if (GrappleJumpXYBoost != 0)
 		{
 			var input = RelativeMoveInput;
 			if (input != Vec2.Zero)
 			{
 				input = input.Normalized();
 				targetFacing = input;
-				velocity += new Vec3(input * DashJumpXYBoost, 0);
+				velocity += new Vec3(input * GrappleJumpXYBoost, 0);
 			}
 		}
 
-		AddPlatformVelocity(false);
-		CancelGroundSnap();
+		//AddPlatformVelocity(false);
+		//CancelGroundSnap();
 
 		ModelScale = new(.6f, .6f, 1.4f);
 		Audio.Play(Sfx.sfx_jump, Position);
@@ -956,8 +933,6 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 		Calc.Approach(ref velXY, Vec2.Zero, 30);
 		velocity = velocity.WithXY(velXY);
 
-		dashes = Math.Max(dashes, 1);
-		jumps = Math.Max(jumps, 1);
 		CancelGroundSnap();
 	}
 
@@ -1165,21 +1140,21 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 			tFootstep = FootstepInterval;
 
 		// start climbing
-		if (Controls.Climb.Down && tClimbCooldown <= 0 && TryClimb())
+		//if (Controls.Climb.Down && tClimbCooldown <= 0 && TryClimb())
+		//{
+		//	stateMachine.State = States.Climbing;
+		//	return;
+		//}
+
+		if (Controls.Climb.ConsumePress() && tGrappleCooldown <= 0)
 		{
-			stateMachine.State = States.Climbing;
+			stateMachine.State = States.Throwing;
 			return;
 		}
 
-		// dashing
-		//if (TryDash())
-		//	return;
-
 		// jump & gravity
 		if (tCoyote > 0 && Controls.Jump.ConsumePress())
-			Jump(false);
-		else if (Controls.Jump.ConsumePress())
-			Jump(true);
+			Jump();
 		else if (WallJumpCheck())
 			WallJump();
 		else
@@ -1239,152 +1214,158 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 	#endregion
 
-	#region Dashing State
+	#region Throwing Hook State
 
-	public int Dashes => dashes;
-	public int Jumps => jumps;
-	private int dashes = 1;
-	private int jumps = 1;
-	private float tDash;
-	private float tDashCooldown;
-	private float tDashResetCooldown;
-	private float tJumpResetCooldown;
-	private float tDashResetFlash;
-	private float tNoDashJump;
-	private bool dashedOnGround;
-	private int dashTrailsCreated;
-
-	private bool TryDash()
-	{
-		//if (dashes > 0 && tDashCooldown <= 0 && Controls.Dash.ConsumePress())
-		//{
-		//	dashes--;
-		//	stateMachine.State = States.Dashing;
-		//	return true;
-		//}
-		//else return false;
-		return false;
-	}
-
-	private void StDashingEnter()
-	{
+	private Vec3 grappleHook;
+	private Vec3 grappleOffset;
+	private float tHookLength;
+	private float hookSpeed;
+	
+	private void StThrowingEnter() {
 		if (RelativeMoveInput != Vec2.Zero)
 			targetFacing = RelativeMoveInput;
 		Facing = targetFacing;
+		grappleOffset = new Vec3(Facing, 0) * 4;
+		hookSpeed = HookSpeed;
+		grappleHook = Vec3.Zero;
+		tHookLength = 0;
+		Audio.Play(Sfx.sfx_dash_pink, Position);
+	}
 
-		lastDashHairColor = dashes <= 0 ? CNoDash : CNormal;
-		dashedOnGround = onGround;
-		SetDashSpeed(targetFacing);
+	private void StThrowingUpdate() {
+		var result = ClimbCheckAt(grappleHook + Vec3.UnitZ * 4f, out var wall);
+		if (result) { // Hook hit a wall!
+			stateMachine.State = States.Grappling;
+			// Vertical ring rotated against the wall
+			DustCircleOnWall(wall.Normal.Cross(wall.Normal.UpwardPerpendicularNormal()), 4, 16, Position + grappleHook);
+			return;
+		}
+		hookSpeed = Calc.Approach(hookSpeed, HookSpeedMax, HookSpeedAccel * Time.Delta);
+		grappleHook += grappleOffset * hookSpeed * Time.Delta;
+		tHookLength += hookSpeed * Time.Delta;
+		if (tHookLength > HookLength || !Controls.Climb.Down) {
+			stateMachine.State = States.Normal;
+			return;
+		}
+		World.Request<Dust>().Init(Position + grappleHook + Vec3.UnitZ * 4f, Vec3.Zero);
+		velocity = Vec3.Zero;
+	}
+
+	// ChatGPT did most of the next two methods, frankly it's not very good 
+	private void DustCircleOnWall(Vec3 wallNormal, float radius, int numPoints, Vec3 pos)
+	{
+	    // Calculate a vector perpendicular to both the wall and the floor
+	    var perpendicularVec = Vec3.Cross(wallNormal, Vec3.UnitZ);
+
+	    // Calculate the angle increment
+	    float angleIncrement = MathF.Tau / numPoints;
+
+	    for (int i = 0; i < numPoints; i++)
+	    {
+	        // Calculate the angle for this point
+	        float angle = i * angleIncrement;
+
+	        // Calculate the position of the point on the circle
+	        float x = radius * MathF.Cos(angle);
+	        float y = radius * MathF.Sin(angle);
+	        Vec3 point = new Vec3(x, y, 0);
+
+	        // Rotate the point to align with the wall
+	        point = RotateVector(point, wallNormal, MathF.PI / 2); // Rotate by 90 degrees to align with the wall
+
+	        // Add the point to the list
+	        World.Request<Dust>().Init(pos + point, new Vec3(point.X, point.Y, point.Z / 2.0f), 0xEEEEFF);
+	    }
+	}
+
+	// Function to rotate a vector around an arbitrary axis
+	private static Vec3 RotateVector(Vec3 vector, Vec3 axis, float angle)
+	{
+	    float cosTheta = MathF.Cos(angle);
+	    float sinTheta = MathF.Sin(angle);
+	    float oneMinusCosTheta = 1 - cosTheta;
+
+	    float x = (cosTheta + (1 - cosTheta) * axis.X * axis.X) * vector.X +
+	              (oneMinusCosTheta * axis.X * axis.Y - sinTheta * axis.Z) * vector.Y +
+	              (oneMinusCosTheta * axis.X * axis.Z + sinTheta * axis.Y) * vector.Z;
+
+	    float y = (oneMinusCosTheta * axis.X * axis.Y + sinTheta * axis.Z) * vector.X +
+	              (cosTheta + (1 - cosTheta) * axis.Y * axis.Y) * vector.Y +
+	              (oneMinusCosTheta * axis.Y * axis.Z - sinTheta * axis.X) * vector.Z;
+
+	    float z = (oneMinusCosTheta * axis.X * axis.Z - sinTheta * axis.Y) * vector.X +
+	              (oneMinusCosTheta * axis.Y * axis.Z + sinTheta * axis.X) * vector.Y +
+	              (cosTheta + (1 - cosTheta) * axis.Z * axis.Z) * vector.Z;
+
+	    return new Vec3(x, y, z);
+	}
+	#endregion
+
+
+	#region Grappling State
+
+	private float tGrappleCooldown;
+	private float tNoGrappleJump;
+
+	private void StGrapplingEnter()
+	{
+		tNoGrappleJump = NoGrappleJumpTime;
+
+		//SetGrappleSpeed(targetFacing);
 		autoJump = true;
-
-		tDash = DashTime;
-		tDashResetCooldown = DashResetCooldown;
-		tNoDashJump = .1f;
-		dashTrailsCreated = 0;
 
 		World.HitStun = .02f;
 
-		if (dashes <= 1)
-			Audio.Play(Sfx.sfx_dash_red, Position);
-		else
-			Audio.Play(Sfx.sfx_dash_pink, Position);
+		Audio.Play(Sfx.sfx_dash_red, Position);
 
 		//CancelGroundSnap();
 	}
 
-	private void StDashingExit()
+	private void StGrapplingExit()
 	{
-		tDashCooldown = DashCooldown;
-		CreateDashtTrail();
+		tGrappleCooldown = GrappleCooldown;
+		if (!onGround && stateMachine.State != States.Climbing)
+			velocity = new Vec3(velocity.X * GrappleEndSpeedMult, velocity.Y * GrappleEndSpeedMult, velocity.Z);
+		return;
 	}
 
-	private void StDashingUpdate()
+	private void StGrapplingUpdate()
 	{
 		Model.Play("Dash");
 
-		tDash -= Time.Delta;
-		if (tDash <= 0)
-		{
-			if (!onGround)
-				velocity *= DashEndSpeedMult;
+		if (tNoGrappleJump > 0) {
+			tNoGrappleJump -= Time.Delta;
+			return;
+		}
+
+		//if (tNoGrappleJump <= 0 && Controls.Move.Value != Vec2.Zero && Vec2.Dot(Controls.Move.Value, targetFacing) >= -.2f)
+		//{
+		//	targetFacing = Calc.RotateToward(targetFacing, RelativeMoveInput, DashRotateSpeed * Time.Delta, 0);
+		//}
+
+		SetGrappleSpeed(targetFacing);
+		if (Controls.Jump.Down) {
+			GrappleJump();
 			stateMachine.State = States.Normal;
 			return;
 		}
 
-		if (dashTrailsCreated <= 0 || (dashTrailsCreated == 1 && tDash <= DashTime * .5f))
+		if (Controls.Climb.Down && TryClimb())
 		{
-			dashTrailsCreated++;
-			CreateDashtTrail();
+			stateMachine.State = States.Climbing;
+			return;
 		}
 
-		if (Controls.Move.Value != Vec2.Zero && Vec2.Dot(Controls.Move.Value, targetFacing) >= -.2f)
-		{
-			targetFacing = Calc.RotateToward(targetFacing, RelativeMoveInput, DashRotateSpeed * Time.Delta, 0);
-			SetDashSpeed(targetFacing);
-		}
-
-		if (tNoDashJump > 0)
-			tNoDashJump -= Time.Delta;
-
-		// dash jump
-		if (dashedOnGround && tCoyote > 0 && tNoDashJump <= 0 && Controls.Jump.ConsumePress())
+		if (!Controls.Climb.Down)
 		{
 			stateMachine.State = States.Normal;
-			DashJump();
 			return;
 		}
 	}
 
-	private void CreateDashtTrail()
+	private void SetGrappleSpeed(in Vec2 dir)
 	{
-		Trail? trail = null;
-		foreach (var it in trails)
-			if (it.Percent >= 1)
-			{
-				trail = it;
-				break;
-			}
-		if (trail == null)
-			trails.Add(trail = new());
-
-		trail.Model.SetBlendedWeights(Model.GetBlendedWeights());
-		trail.Hair.CopyState(Hair);
-		trail.Percent = 0.0f;
-		trail.Transform = Model.Transform * Matrix;
-		trail.Color = lastDashHairColor;
-	}
-
-	public bool RefillDash(int amount = 1)
-	{
-		if (dashes < amount)
-		{
-			dashes = amount;
-			tDashResetFlash = .05f;
-			return true;
-		}
-		else
-			return false;
-	}
-
-	public bool RefillJump(int amount = 1)
-	{
-		if (jumps < amount)
-		{
-			jumps = amount;
-			tDashResetFlash = .05f;
-			return true;
-		}
-		else
-			return false;
-	}
-
-	private void SetDashSpeed(in Vec2 dir)
-	{
-		if (dashedOnGround)
-			velocity = new Vec3(dir, 0) * DashSpeed;
-		else
-			velocity = new Vec3(dir, .4f).Normalized() * DashSpeed;
-
+		velocity = new Vec3(dir, .4f).Normalized() * GrappleSpeed;
 	}
 
 	#endregion
@@ -1500,13 +1481,6 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 			stateMachine.State = States.Normal;
 			targetFacing = -targetFacing;
 			WallJump();
-			return;
-		}
-
-		if (dashes > 0 && tDashCooldown <= 0 && Controls.Dash.ConsumePress())
-		{
-			stateMachine.State = States.Dashing;
-			dashes--;
 			return;
 		}
 
@@ -1790,20 +1764,6 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 		var velXY = velocity.XY();
 		Calc.Approach(ref velXY, Vec2.Zero, 200 * Time.Delta);
 		velocity = velocity.WithXY(velXY);
-
-		// dashing
-		//if (dashes > 0 && tDashCooldown <= 0 && Controls.Dash.ConsumePress())
-		//{
-		//	stateMachine.State = States.Dashing;
-		//	dashes--;
-		//	return;
-		//}
-		if (jumps > 0 && Controls.Jump.ConsumePress())
-		{
-			stateMachine.State = States.Normal;
-			Jump(true);
-			return;
-		}
 	}
 
 	public void FeatherGet(Feather feather)
@@ -1821,8 +1781,6 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 		{
 			stateMachine.State = States.FeatherStart;
 			featherZ = feather.Position.Z - 2;
-			dashes = Math.Max(dashes, 1);
-			jumps = Math.Max(jumps, 1);
 			Audio.Play(Sfx.sfx_feather_get, Position);
 		}
 	}
@@ -1863,8 +1821,6 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 		if (tFeather > EndWarningTime || Time.BetweenInterval(.1f))
 			SetHairColor(CFeather);
-		else if (dashes == 2)
-			SetHairColor(CTwoDashes);
 		else
 			SetHairColor(CNormal);
 
@@ -1902,23 +1858,6 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 			autoJump = true;
 			Audio.Play(Sfx.sfx_feather_state_end, Position);
 
-			return;
-		}
-
-		// dashing
-		/*
-		if (dashes > 0 && tDashCooldown <= 0 && Controls.Dash.ConsumePress())
-		{
-			stateMachine.State = States.Dashing;
-			dashes--;
-			return;
-		}
-		*/
-
-		if (jumps > 0 && Controls.Jump.ConsumePress())
-		{
-			stateMachine.State = States.Normal;
-			Jump(true);
 			return;
 		}
 
@@ -2054,12 +1993,6 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	private void StCutsceneEnter()
 	{
 		Model.Play("Idle");
-		// Fix white hair in cutscene bug
-		if (tDashResetFlash > 0)
-		{
-			tDashResetFlash = 0;
-			SetHairColor(CNormal);
-		}
 	}
 
 	private void StCutsceneUpdate()

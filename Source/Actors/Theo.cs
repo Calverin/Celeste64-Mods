@@ -5,14 +5,14 @@ public class Theo : NPC
 {
 	public const string TALK_FLAG = "THEO";
 
-	public Theo() : base(Assets.Models["lani"]) // use "player" for Madi
+	public Theo() : base(Assets.Models["Theo"])
 	{
 		Model.Transform = Matrix.CreateScale(3) * Matrix.CreateTranslation(0, 0, -1.5f);
 		InteractHoverOffset = new Vec3(0, -2, 16);
 		InteractRadius = 32;
 		CheckForDialog();
 
-		SetHairColor(0x1d2b53);
+		SetHairColor(0x452318);
 	}
 
 	public void SetHairColor(Color color)

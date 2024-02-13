@@ -24,7 +24,7 @@ public class DoubleDashPuzzleBlock : Solid, IUnlockStrawberry, IHaveSprites
     {
 		base.Update();
 
-		if (!Satisfied && !ready && World.Get<Player>() is {} player && player.Dashes >= 2 && HasPlayerRider())
+		if (!Satisfied && !ready && World.Get<Player>() is {} player && HasPlayerRider())
 		{
 			pulseColor = player.Hair.Color;
 			ready = true;

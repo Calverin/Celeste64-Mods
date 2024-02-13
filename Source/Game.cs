@@ -35,8 +35,8 @@ public class Game : Module
 		FadeIn
 	}
 
-	public const string GamePath = "Celeste64";
-	public const string GameTitle = "Celeste 64: Theo is on the Mountain";
+	public const string GamePath = "Celeste128";
+	public const string GameTitle = "Celeste 128: Lani's Trek";
 	public const int Width = 640;
 	public const int Height = 360;
 	public static readonly Version Version = typeof(Game).Assembly.GetName().Version!;

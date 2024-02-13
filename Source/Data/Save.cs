@@ -6,7 +6,7 @@ namespace Celeste64;
 
 public class Save
 {
-	public const string FileName = "save_theo.json";
+	public const string FileName = "save_lani.json";
 
 	public enum InvertCameraOptions
 	{
