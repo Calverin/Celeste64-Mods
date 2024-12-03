@@ -1365,7 +1365,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 	private void SetGrappleSpeed(in Vec2 dir)
 	{
-		velocity = new Vec3(dir, .4f).Normalized() * GrappleSpeed;
+		velocity = new Vec3(dir, 0f).Normalized() * GrappleSpeed;
 	}
 
 	#endregion
@@ -1993,12 +1993,6 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	private void StCutsceneEnter()
 	{
 		Model.Play("Idle");
-		// Fix white hair in cutscene bug
-		if (tDashResetFlash > 0)
-		{
-			tDashResetFlash = 0;
-			SetHairColor(CNormal);
-		}
 	}
 
 	private void StCutsceneUpdate()
