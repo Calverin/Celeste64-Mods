@@ -20,11 +20,11 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	private const float RotateSpeedAboveMax = MathF.Tau * .6f;
 	private const float Friction = 800;
 	private const float AirFrictionMult = .2f;
-	private const float Gravity = 800;
+	private const float Gravity = 600;
 	private const float MaxFall = -180;
 	private const float HalfGravThreshold = 100;
 	private const float JumpHoldTime = .1f;
-	private const float JumpSpeed = 80;
+	private const float JumpSpeed = 110;
 	private const float JumpXYBoost = 20;
 	private const float CoyoteTime = .18f;
 	private const float WallJumpXYSpeed = MaxSpeed * 1.3f;
@@ -32,17 +32,18 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	private const float HookSpeed = 60.0f;
 	private const float HookSpeedMax = 100.0f;
 	private const float HookSpeedAccel = 4.0f;
-	private const float HookLength = 30.0f;
+	private const float HookLength = 45.0f;
 
-	private const float GrappleSpeed = 100;
+	private const float GrappleSpeed = 200;
 	private const float GrappleEndSpeedMult = .75f;
 	private const float GrappleCooldown = .1f;
-	private const float DashRotateSpeed = MathF.Tau * .3f;
+	private const float GrappleAccel = 15;
 
 	private const float GrappleJumpSpeed = 160;
 	private const float GrappleJumpHoldSpeed = 30;
 	private const float GrappleJumpHoldTime = .3f;
-	private const float GrappleJumpXYBoost = 16;
+	private const float GrappleJumpXYBoost = 24;
+	private const float GrappleJumpZBoost = 0.75f;
 
 	private const float NoGrappleJumpTime = .1f;
 
@@ -382,8 +383,11 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 			{
 				if (actor is IPickup pickup)
 				{
-					if ((SolidWaistTestPos - actor.Position).LengthSquared() < pickup.PickupRadius * pickup.PickupRadius)
+					if ((SolidWaistTestPos - actor.Position).LengthSquared() < pickup.PickupRadius * pickup.PickupRadius) {
+						// Stop moving from the grappling hook
+						stateMachine.State = States.Normal;
 						pickup.Pickup(this);
+					}
 				}
 			}
 		}
@@ -800,7 +804,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 			{
 				input = input.Normalized();
 				targetFacing = input;
-				velocity += new Vec3(input * GrappleJumpXYBoost, 0);
+				velocity += new Vec3(input * GrappleJumpXYBoost, GrappleJumpZBoost);
 			}
 		}
 
@@ -1233,7 +1237,18 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	}
 
 	private void StThrowingUpdate() {
+		// Check if the hook hits a wall or a grapple point or strawberry
 		var result = ClimbCheckAt(grappleHook + Vec3.UnitZ * 4f, out var wall);
+		if (!result) {
+			foreach (var actor in World.All<IPickup>()) {
+				if (actor is IPickup pickup) {
+					if ((SolidWaistTestPos + grappleHook + Vec3.UnitZ * 4f - actor.Position).LengthSquared() < pickup.PickupRadius * pickup.PickupRadius) {
+						result = true;
+						break;
+					}
+				}
+			}
+		}
 		if (result) { // Hook hit a wall!
 			stateMachine.State = States.Grappling;
 			// Vertical ring rotated against the wall
@@ -1268,7 +1283,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 	        // Calculate the position of the point on the circle
 	        float x = radius * MathF.Cos(angle);
 	        float y = radius * MathF.Sin(angle);
-	        Vec3 point = new Vec3(x, y, 0);
+	        Vec3 point = new(x, y, 0);
 
 	        // Rotate the point to align with the wall
 	        point = RotateVector(point, wallNormal, MathF.PI / 2); // Rotate by 90 degrees to align with the wall
@@ -1365,7 +1380,7 @@ public class Player : Actor, IHaveModels, IHaveSprites, IRidePlatforms, ICastPoi
 
 	private void SetGrappleSpeed(in Vec2 dir)
 	{
-		velocity = new Vec3(dir, 0f).Normalized() * GrappleSpeed;
+		velocity = Vec3.Lerp(velocity, new Vec3(dir, 0f).Normalized() * GrappleSpeed, GrappleAccel * Time.Delta);
 	}
 
 	#endregion
